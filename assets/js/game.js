@@ -3,27 +3,16 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(playerName);
-console.log(playerHealth, playerAttack, playerMoney)
-console.log("You can put regular sentences in these.");
-
 var enemyNames = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
+console.log(playerHealth, playerAttack, playerMoney)
+
 console.log(enemyNames);
-console.log(enemyNames[0]);
-console.log(enemyNames[1]);
-console.log(enemyNames[2]);
 console.log(enemyNames.length);
-
-for(var i = 0; i < enemyNames.length; i++) {
-    console.log(enemyNames[i]);
-    console.log(i);
-    console.log(enemyNames[i] + " is at " + i + " index");
-}
-
-
+console.log(enemyNames[0]);
+console.log(enemyNames[3]);
 
 // fight function
 var fight = function(enemyName) {
@@ -43,7 +32,7 @@ var fight = function(enemyName) {
         window.alert(playerName + " has decided to skip this fight. Goodbye!");
         //subtract money from playerMoney for skipping
         playerMoney = playerMoney - 10;
-        console.log("playerMoney", playerMoney);
+        
         break;
         }
     }
@@ -81,44 +70,66 @@ var fight = function(enemyName) {
           }
         }
     };
-        // if no (false), ask question again by running fight() again
-       // else {
-           // fight();
-       // }
-        // if player did not chose 1 or 2 in prompt
-    // else {
-       // window.alert("You need to choose a valid option. Try again!");
-   // }
+        
+//function to start a new game
+var startGame = function() {
+    //reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
 
+// fight each enemy-robot by looping over them and fighting them one at a time
 for(var i = 0; i < enemyNames.length; i++) {
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(pickedEnemyName);
+    //if player is still alive, keep fighting
     if (playerHealth > 0) {
         // let player know what round they are in
         window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
-        // pick new enemy to fight based on the index of the enemyNames array
+        //pick new enemy to fight based on the index of the enemyNames array
         var pickedEnemyName = enemyNames[i];
-    
         //reset enemyHealth before starting a new fight
         enemyHealth = 50;
-    
+        //use debugger to pause script from running and check what's going on at that moment in the code
         debugger;
-    
-        // pass the pickedEnemyName variable's value into the fight function
+        //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName
         fight(pickedEnemyName);
     }
+    //if player isn't alive, stop the game
     else {
         window.alert("You have lost your robot in battle! Game Over!");
         break;
+      }
     }
-}
+    //after the loop ends, player is either out of health or enemies to fight, so run the endGame function
+    endGame();
+};
 
-//run fight function to start game
-//fight();
+//function to end the entire game
+var endGame = function() {
+    //if player is still alive, player wins!
+    if (playerHealth > 0) {
+        window.alert("Great job, you've survived the game! You now have a score of " + playerMoney + ".");
+    }
+    else {
+    window.alert("You've lost your robot in battle.");
+    }
+    //ask player if they'd like to play again
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+
+    if(playAgainConfirm) {
+        //restart game
+        startGame();
+    }
+    else {
+        window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+    }
+};
+//start the game when the page loads
+startGame();
 
 // Game States
 // "WIN" - Player robot has defeated all enemy-robots
-//    * Fight all enemy-robots
+//    *Fight all enemy-robots
 //    *Defeat each enemy-robot
 // "LOSE" - Player robot's health is zero or less
+
+//money and final else you have lost the game, game over isn't working
